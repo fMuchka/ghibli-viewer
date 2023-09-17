@@ -1,0 +1,52 @@
+:root {
+  --light-background-color: #BFD7EA;
+  --light-text-color: #FEFFFE;
+  --dark-text-color: #1E1E24;
+  --active-text-color: #111D4A;
+  --dark-background-color: #1E1E24;
+  --button-background-color: #111D4A;
+}
+
+html, body {
+  margin: 0;
+}
+
+.pageContent{
+  display: flex;
+  flex-direction: column;
+  margin: 0 2rem;
+  height: calc(100vh - 75px);
+  width: 100%;
+  position: fixed;
+  top: 75px;
+  padding: 0 2rem;
+}
+
+.ant-spin-dot-item {
+  background-color: var(--dark-text-color) !important;
+}
+
+.lightText {
+  color: var(--light-text-color);
+}
+
+.darkText {
+  color: var(--dark-text-color) !important;
+}
+
+.lightBackground {
+  background-color: var(--light-background-color);
+}
+
+.darkBackground {
+  background-color: var(--dark-background-color);
+}
+
+.button {
+  background-color: var(--button-background-color);
+  color: var(--light-text-color)
+}
+
+.activeText {
+  color: var(--active-text-color);
+}
