@@ -8,13 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 function App() {
 
   return (
-    <div
-      style={{
-        background: "#BFD7EA",
-        height: "100vh",
-        width: "100vw"
-      }}
-    >
+    <div>
       <Navigation />
 
       <Routes>

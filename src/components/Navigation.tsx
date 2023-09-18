@@ -51,11 +51,12 @@ function Navigation() {
       placeItems: "flex-end",
       paddingLeft: "2rem",
       position: "fixed",
+      zIndex: "10",
       top: "0",
       width: "100%"
     }}
-  />;
-};
+  />
+}
 
 
 

@@ -15,7 +15,7 @@ function Home() {
         <div className="pageContent" style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            alignItems: "center"
+            placeItems: "center"
         }}>
 
             <div className={"lightBackground"}>
