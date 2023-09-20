@@ -78,10 +78,6 @@ export function DashboardPeopleCard() {
             } 
         })
 
-        console.log(speciesMap);
-        
-
-
         return speciesMap.size;
     }
 

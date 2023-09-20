@@ -12,7 +12,7 @@ const items: MenuProps['items'] = [
     key: 'dashboard',
   },
   {
-    label: 'Films',
+    label: <Link to='/films'>Films</Link>,
     key: 'films',
   },
   {
