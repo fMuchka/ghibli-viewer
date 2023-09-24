@@ -1,13 +1,13 @@
 import { Card, Typography, Spin } from "antd";
 
-import { useFetchLocationsQuery } from "../app/slices/ghibli-api-slice"
+import { useFetchLocationsQuery } from "@/app/slices/ghibli-api-slice"
 
 const { Title, Text } = Typography;
 
 export function DashboardLocationCard() {
     const { data = [], isFetching } = useFetchLocationsQuery();
 
-    const getNumberOfLocations = () : number => {
+    function getNumberOfLocations () : number {
         return data.length;
     }
     

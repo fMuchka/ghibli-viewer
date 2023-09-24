@@ -1,6 +1,6 @@
 import { Card, Divider, Row, Col, Statistic, Typography, Spin } from "antd";
 
-import { useFetchFilmsQuery } from "../app/slices/ghibli-api-slice"
+import { useFetchFilmsQuery } from "@/app/slices/ghibli-api-slice"
 
 const { Title, Text } = Typography;
 

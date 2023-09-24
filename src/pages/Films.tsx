@@ -1,11 +1,17 @@
-import { Card, Table, Typography, Spin } from "antd";
 
-import { useFetchFilmsQuery } from "../app/slices/ghibli-api-slice"
-import { ColumnsType } from "antd/es/table";
+import { useState } from "react";
+
+import { Anchor } from "antd";
+
+import { useFetchFilmsQuery } from "@/app/slices/ghibli-api-slice"
+
+import FilmsSummaryTable from "@/components/Films/Films-summary-table";
+
+import FilmsPeopleTable from "@/components/Films/Films-people-table";
 
 //const { Title, Text } = Typography;
 
-interface FormattedFilm {
+export interface FormattedFilm {
     id: string;
     title: string;
     originalTitle: string;
@@ -20,26 +26,34 @@ interface FormattedFilm {
     rtScore: number;
 }
 
-function sortFilmByProperties(a: FormattedFilm, b: FormattedFilm, sortKey: keyof FormattedFilm): number {
+type PageComponentsKeys = "tableSummary" | "peopleTable";
 
-    if (typeof a[sortKey] === "string") {
-        const aUpper = (a[sortKey] as string).toUpperCase();
-        const bUpper = (b[sortKey] as string).toUpperCase();
+const PAGE_COMPONENTS: {
+    key: PageComponentsKeys,
+    id: string,
+    title: string
+}[] = [
+    { key: "tableSummary", id: "tableSummary", title: "Table Summary" },
+    { key: "peopleTable", id: "personTable", title: "Producer/Director Overview" }
+];
 
-        if (aUpper < bUpper) return -1;
-        if (aUpper > bUpper) return 1;
 
-        return 0;    
-    } else {
-        return (a[sortKey] as number ) - (b[sortKey] as number)   
-    }
-}
 
 export default function Films() {
-    const { data = [] , isFetching } = useFetchFilmsQuery();
+    const { data = [], isFetching } = useFetchFilmsQuery();
+    const [checkedPerson, setCheckedPerson] = useState<string>("");
+
+
+    const EVENT_HANDLERS = {
+        handleAnchorClick: (
+                e: React.MouseEvent<HTMLElement>,
+            ) => {
+                e.preventDefault();
+        }
+    } as const;
 
     // only data we care about on this page
-    const getFormattedData = (): FormattedFilm[] => {
+    function getFormattedData() {
 
         const formatted : FormattedFilm[] = [];
         const dataCopy = data.slice();
@@ -66,59 +80,40 @@ export default function Films() {
         return formatted;
     }
 
-    function getColumns() {
-        const columns: ColumnsType<FormattedFilm> = [
-            {
-                title: 'Title',
-                dataIndex: 'title',
-                key: 'name',
-                sorter: (a, b) => sortFilmByProperties(a, b, "title")
-            },
-            {
-                title: 'Producer',
-                dataIndex: 'producer',
-                key: 'producer',
-                sorter: (a, b) => sortFilmByProperties(a, b, "producer")
-            },
-            {
-                title: 'Director',
-                dataIndex: 'director',
-                key: 'director',
-                sorter: (a, b) => sortFilmByProperties(a, b, "director")
-            },
-            {
-                title: 'Release Year',
-                dataIndex: 'releaseDate',
-                key: 'releaseDate',
-                defaultSortOrder: "ascend",
-                sorter: (a, b) => sortFilmByProperties(a, b, "releaseDate")
-            },
-            {
-                title: 'Rotten Tomatoes Score',
-                dataIndex: 'rtScore',
-                key: 'rtScore',
-                sorter: (a, b) => sortFilmByProperties(a, b, "rtScore")
-            }
-        ];
-
-        return columns;
-    }
-
+    
     const formattedData = getFormattedData();
 
     return (
         <div className="pageContent">
-            <Card> 
-                <Table
-                    columns={ getColumns() }
-                    dataSource={formattedData}
+            <Anchor
+                direction="horizontal"
+                onClick={EVENT_HANDLERS.handleAnchorClick}
+                items={PAGE_COMPONENTS.map(comp => {
+                    return {
+                        key: comp.key,
+                        href: comp.id,
+                        title: comp.title
+                    }
+                })}
+            >
+                
+            </Anchor>
 
-                    rowKey={ (record) => record.id  }
-                    
-                    loading={ isFetching }
-                    pagination={ false }
-                />
-            </Card>
+            <FilmsSummaryTable
+                id={(PAGE_COMPONENTS.find(e => e.key as PageComponentsKeys === "tableSummary") as { key: PageComponentsKeys, title: string, id: string }).id}
+                isFetching={isFetching}
+                data={formattedData}
+                checkedPerson={checkedPerson}
+                setCheckedPerson={setCheckedPerson}
+            />
+
+            <FilmsPeopleTable
+                id={(PAGE_COMPONENTS.find(e => e.key as PageComponentsKeys === "peopleTable") as { key: PageComponentsKeys, title: string, id: string }).id}
+                isFetching={isFetching}
+                data={formattedData}
+                checkedPerson={checkedPerson}
+                setCheckedPerson={setCheckedPerson}
+            />
         </div>
     )
 } 

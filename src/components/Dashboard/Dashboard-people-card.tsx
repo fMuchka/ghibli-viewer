@@ -1,6 +1,6 @@
 import { Card, Divider, Row, Col, Statistic, Typography, Spin } from "antd";
 
-import { useFetchPeopleQuery } from "../app/slices/ghibli-api-slice"
+import { useFetchPeopleQuery } from "@/app/slices/ghibli-api-slice"
 
 const { Title, Text } = Typography;
 
@@ -19,7 +19,7 @@ export function DashboardPeopleCard() {
     const { data = [], isFetching } = useFetchPeopleQuery();
 
     // only data we care about on this page
-    const getFormattedData = (): FormattedPeople[] => {
+    function getFormattedData (): FormattedPeople[] {
 
         const formatted: FormattedPeople[] = [];
         const dataCopy = data.slice();
@@ -44,11 +44,11 @@ export function DashboardPeopleCard() {
 
     const formattedData = getFormattedData();
 
-    const getNumberOfPeople = () : number => {
+    function getNumberOfPeople () : number {
         return data.length;
     }
 
-    const getAgeOfYoungestCharacter = (): number => {
+    function getAgeOfYoungestCharacter(): number {
         let smallest = Number.POSITIVE_INFINITY;
 
         formattedData.forEach(e => {
@@ -59,7 +59,7 @@ export function DashboardPeopleCard() {
         return smallest;
     }
 
-    const getAgeOfOldestCharacter = (): number => {
+    function getAgeOfOldestCharacter(): number {
         let biggest = Number.NEGATIVE_INFINITY;
 
         formattedData.forEach(e => {
@@ -69,7 +69,7 @@ export function DashboardPeopleCard() {
         return biggest;
     }
 
-    const getNumberOfSpeciesAcrossCharacters = (): number => {
+    function getNumberOfSpeciesAcrossCharacters(): number {
         const speciesMap = new Map<string, boolean>();
 
         formattedData.forEach(e => {

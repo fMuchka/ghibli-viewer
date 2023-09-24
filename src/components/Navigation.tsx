@@ -15,7 +15,8 @@ const items: MenuProps['items'] = [
     label: <Link to='/films'>Films</Link>,
     key: 'films',
   },
-  {
+/*  TO-DO: 
+ {
     label: 'People',
     key: 'people',
   },
@@ -30,7 +31,7 @@ const items: MenuProps['items'] = [
   {
     label: 'Vehicles',
     key: 'vehicles',
-  },
+  },*/
 ];
 
 function Navigation() {

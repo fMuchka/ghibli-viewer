@@ -7,7 +7,7 @@ const { Title, Text } = Typography;
 function Home() {
     const navigate = useNavigate()
 
-    const handleButtonClick = () => {
+    function handleButtonClick() {
         navigate("/dashboard");
     }
 
