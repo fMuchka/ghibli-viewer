@@ -46,9 +46,23 @@ export default function Films() {
 
     const EVENT_HANDLERS = {
         handleAnchorClick: (
-                e: React.MouseEvent<HTMLElement>,
+            e: React.MouseEvent<HTMLElement>,
+            link: {
+                title: React.ReactNode;
+                href: string;
+            }
             ) => {
-                e.preventDefault();
+            e.preventDefault();
+
+            const htmlEl = document.getElementById(link.href) as HTMLElement;
+            const yCoord = htmlEl.getBoundingClientRect().y;
+
+            const menuHeight = 75; // should probably also lookup via code
+
+            window.scrollTo({
+                top: yCoord - menuHeight,
+                behavior: "smooth",
+            });
         }
     } as const;
 
@@ -84,9 +98,18 @@ export default function Films() {
     const formattedData = getFormattedData();
 
     return (
-        <div className="pageContent">
+        <div className="pageContent"
+            style={{
+                padding: "0 220px"
+            }}
+        >
             <Anchor
-                direction="horizontal"
+                style={{
+                    position: "fixed",
+                    right: "10px",
+                    top: "80px"
+                }}
+
                 onClick={EVENT_HANDLERS.handleAnchorClick}
                 items={PAGE_COMPONENTS.map(comp => {
                     return {
